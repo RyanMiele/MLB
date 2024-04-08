@@ -1,0 +1,260 @@
+
+            
+            pitcher <- (mlb_stats(stat_type = 'season', stat_group = 'pitching', season = 2023,player_pool = "All"))
+            
+            batter <- (mlb_stats(stat_type = 'season', stat_group = 'hitting', season = 2023,player_pool = "All"))
+            
+            pitcher <- pitcher%>%
+              reframe(player_id, player_full_name)
+            
+            
+            batter <- batter%>%
+              filter(plate_appearances > 100)%>%
+              reframe(player_id, player_full_name,ops)
+            
+            pitcher_name <- unique(pitcher$player_full_name)
+            
+            with_names <- SavantData23%>%
+              left_join(pitcher, by = c("pitcher" = "player_id"))%>%
+              left_join(batter, by = c("batter" = "player_id"))%>%
+              reframe(pitcher,player_full_name.x,batter,player_full_name.y,ops,
+                      pitch_name,game_date,release_speed,zone,stand,type,balls,strikes,on_3b,on_2b,on_1b,
+                      outs_when_up,inning,inning_topbot,at_bat_number,bat_score,fld_score,
+                      estimated_woba_using_speedangle,description)
+            
+            with_names$ops <- as.numeric(with_names$ops)
+            
+            
+
+            calcs <- with_names%>%
+              mutate(count = case_when(balls == 0 & strikes == 0 ~ "0-0",
+                                       balls == 1 & strikes == 0 ~ "1-0",
+                                       balls == 2 & strikes == 0 ~ "2-0",
+                                       balls == 3 & strikes == 0 ~ "3-0",
+                                       balls == 0 & strikes == 1 ~ "0-1",
+                                       balls == 1 & strikes == 1 ~ "1-1",
+                                       balls == 2 & strikes == 1 ~ "2-1",
+                                       balls == 3 & strikes == 1 ~ "3-1",
+                                       balls == 0 & strikes == 2 ~ "0-2",
+                                       balls == 1 & strikes == 2 ~ "1-2",
+                                       balls == 2 & strikes == 2 ~ "2-2",
+                                       balls == 3 & strikes == 2 ~ "3-2"),
+                     batter_strength = case_when(ops >.8 ~ "Over .800 OPS",
+                                                 ops <.8 & ops>.7 ~"Between .700 and .800 OPS",
+                                                 ops < .7 ~ "Below .700 OPS"),
+                     double_play_opp = if_else(on_1b == 1 & outs_when_up != "2",1,0),
+                     is_zone = if_else(zone == "11"|zone == "12"|zone == "13"|zone == "14",0,1),
+                      is_swing = if_else(description == "swinging_strike"|description == "hit_into_play"|
+                                           description == "foul"|description == "foul_tip"|
+                                           description == "swinging_strike_blocked",1,0),
+                     is_whiff = if_else(description == "swinging_strike_blocked"|description == "swinging_strike"|
+                                        description == "foul_tip",1,0),
+                     is_called_strike = if_else(description == "called_strike",1,0),
+                     new_zone = case_when(zone == 1 & stand == "R"~ "High Inside Strike",
+                                          zone == 1 & stand == "L"~ "High Outside Strike",
+                                          zone == 2 ~ "High Mid Strike",
+                                          zone == 3 & stand == "L"~ "High Inside Strike",
+                                          zone == 3 & stand == "R"~ "High Outside Strike",
+                                          zone == 4 & stand == "R"~ "Mid Inside Strike",
+                                          zone == 4 & stand == "L"~ "Mid Outside Strike",
+                                          zone == 5 ~ "Mid Strike",
+                                          zone == 6 & stand == "L"~ "Mid Inside Strike",
+                                          zone == 6 & stand == "R"~ "Mid Outside Strike",
+                                          zone == 7 & stand == "R"~ "Low Inside Strike",
+                                          zone == 7 & stand == "L"~ "Low Outside Strike",
+                                          zone == 8 ~ "Low Mid Strike",
+                                          zone == 9 & stand == "L"~ "Low Inside Strike",
+                                          zone == 9 & stand == "R"~ "Low Outside Strike",
+                                          zone == 11 & stand == "R"~ "High Inside Ball",
+                                          zone == 11 & stand == "L"~ "High Outside Ball",
+                                          zone == 12 & stand == "L"~ "High Inside Ball",
+                                          zone == 12 & stand == "R"~ "High Outside Ball",
+                                          zone == 13 & stand == "R"~ "Low Inside Ball",
+                                          zone == 13 & stand == "L"~ "Low Outside Ball",
+                                          zone == 14 & stand == "L"~ "Low Inside Ball",
+                                          zone == 14 & stand == "R"~ "Low Outside Ball"))%>%
+              group_by(pitcher)%>%
+              mutate(total_pitches = n())%>%
+              ungroup()%>%
+              group_by(pitcher,pitch_name)%>%
+              mutate(total_number_of_ind_pitches = n(),
+                     total_pitches_percentage = total_number_of_ind_pitches/total_pitches,
+                     total_avg_mph = mean(release_speed))%>%
+              ungroup()
+            
+            
+            
+            
+            filtered_data <- calcs%>%
+              filter(player_full_name.x == "Gerrit Cole"&
+                       stand == "R" &
+                       balls == 0 &
+                       strikes == 2)%>%
+              mutate(ind_pitches = n())%>%
+              group_by(pitcher,pitch_name)%>%
+              mutate(number_of_ind_pitches = n(),
+                     ind_pitches_percentage = number_of_ind_pitches/ind_pitches,
+                     usage_diff = ind_pitches_percentage - total_pitches_percentage,
+                     ind_avg_mph = mean(release_speed),
+                     mph_diff = ind_avg_mph - total_avg_mph)%>%
+              ungroup()%>%
+              reframe(pitch_name,number_of_ind_pitches,ind_pitches_percentage,usage_diff,ind_avg_mph,mph_diff)%>%
+              arrange(-ind_pitches_percentage)
+              
+            
+            filtered_data <- filtered_data[!duplicated(filtered_data), ]
+            
+            
+            gt(filtered_data)%>%
+              gt_theme_538()%>%
+              # cols_hide(c(per_40_percentile,per_40_percentile_values,per_game_percentile,per_game_percentile_values,
+              #             per_game_percentile.1,per_game_percentile_values.1)) %>% 
+              cols_label(pitch_name = "Pitch Type",
+                         number_of_ind_pitches = "Count",
+                         ind_pitches_percentage = "Usage %",
+                         usage_diff = "Diff. in Usage from Overall Avg",
+                         ind_avg_mph = "Avg. Velocity",
+                         mph_diff = "Diff. in Velocity from Overall Avg")%>%
+              data_color(columns = ind_pitches_percentage,
+                         palette = c("blue", "steelblue1","white", "indianred1","red"),
+                         domain = c(0,.6))%>%
+              data_color(columns = usage_diff,
+                         palette = c("blue", "steelblue1","white", "indianred1","red"),
+                         domain = c(-.3,.3))%>%
+              data_color(columns = mph_diff,
+                         palette = c("blue", "steelblue1","white", "indianred1","red"),
+                         domain = c(-2.5,2.5))%>%
+              fmt_percent(columns = c(ind_pitches_percentage,usage_diff),decimals = 1)%>%
+              fmt_number(columns = c(ind_avg_mph,mph_diff),decimals = 1)%>%
+              gt_add_divider(usage_diff, color = 'black', include_labels = TRUE) %>%
+              gt_add_divider(number_of_ind_pitches, color = 'black', include_labels = TRUE) %>%
+              gt::cols_align(
+                align = "center",
+                columns = c(pitch_name,number_of_ind_pitches,ind_pitches_percentage,usage_diff,ind_avg_mph,mph_diff))
+              # tab_header(title = "Most Frequent Pitches")%>%
+              # #tab_source_note(source_note = "By Bucknell Analytics | Data: ncaahoopR")%>%
+              # opt_align_table_header(align = "center")
+            
+            
+            
+            
+            
+            
+            top_five_zones <- calcs%>%
+              filter(player_full_name.x == "Gerrit Cole"&
+                       stand == "R" &
+                       balls == 0 &
+                       strikes == 2)%>%
+              mutate(ind_pitches = n())%>%
+              group_by(pitcher,pitch_name,zone)%>%
+              mutate(number_of_ind_pitches = n(),
+                     ind_pitches_percentage = number_of_ind_pitches/ind_pitches,
+                     usage_diff = ind_pitches_percentage - total_pitches_percentage,
+                     ind_avg_mph = mean(release_speed),
+                     mph_diff = ind_avg_mph - total_avg_mph)%>%
+              ungroup()%>%
+              reframe(pitch_name,zone,new_zone,number_of_ind_pitches,ind_pitches_percentage)%>%
+              arrange(-ind_pitches_percentage)
+            
+            top_five_zones <- top_five_zones[!duplicated(top_five_zones), ]
+            
+            top_five_zones <- top_five_zones%>%
+              mutate(Rank = row_number())%>%
+              filter(Rank <= 5)%>%
+              reframe(Rank,pitch_name,new_zone,number_of_ind_pitches,ind_pitches_percentage)
+              
+            
+            
+            gt(top_five_zones)%>%
+              gt_theme_538()%>%
+              #cols_hide(c(Rank)) %>% 
+              cols_label(pitch_name = "Pitch Type",
+                         number_of_ind_pitches = "Count",
+                         ind_pitches_percentage = "Usage %",
+                         new_zone = "Location")%>%
+              data_color(columns = ind_pitches_percentage,
+                         palette = c("blue", "steelblue1","white", "indianred1","red"),
+                         domain = c(0,.3))%>%
+              fmt_percent(columns = c(ind_pitches_percentage),decimals = 1)%>%
+              # gt_add_divider(usage_diff, color = 'black', include_labels = TRUE) %>%
+              # gt_add_divider(number_of_ind_pitches, color = 'black', include_labels = TRUE) %>%
+              gt::cols_align(
+                align = "center",
+                columns = c(Rank,pitch_name,number_of_ind_pitches,new_zone,ind_pitches_percentage))%>%
+              tab_header(title = "Most Frequent Pitch + Location")%>%
+              #tab_source_note(source_note = "By Bucknell Analytics | Data: ncaahoopR")%>%
+              opt_align_table_header(align = "center")
+            
+            
+            
+            
+            player <- player %>% 
+              mutate(xwOBA = case_when(
+                !is.na(woba_value) & is.na(estimated_woba_using_speedangle) ~ woba_value,
+                !is.na(estimated_woba_using_speedangle) ~ estimated_woba_using_speedangle,
+                TRUE ~ NA
+              ))
+            
+            
+            situation_stats <- calcs%>%
+              filter(player_full_name.x == "Gerrit Cole"&
+                       stand == "R" &
+                       balls == 0 &
+                       strikes == 2)%>%
+              mutate(ind_pitches = n())%>%
+              group_by(pitcher)%>%
+              mutate(number_of_ind_pitches = n(),
+                     zone_perc = mean(is_zone),
+                     whiff_perc = sum(is_whiff)/sum(is_swing),
+                     xwoba_contact_avg = mean(estimated_woba_using_speedangle,na.rm=TRUE),
+                     csw_perc = (sum(is_whiff) + sum(is_called_strike))/ind_pitches)%>%
+              ungroup()%>%
+              # pivot_longer(c(ind_pitches,zone_perc,whiff_perc,csw_perc,xwoba_contact_avg),
+              #              names_to = "category",values_to = "values")%>%
+              reframe(ind_pitches,zone_perc,whiff_perc,csw_perc,xwoba_contact_avg)
+            
+            situation_stats <- situation_stats[!duplicated(situation_stats), ]
+            
+            
+            gt(situation_stats)%>%
+              gt_theme_538()%>%
+              #cols_hide(c(Rank)) %>% 
+              cols_label(ind_pitches = " Total Count",
+                         zone_perc = "Zone %",
+                         whiff_perc = "Whiff %",
+                         csw_perc = "CSW %",
+                         xwoba_contact_avg = "XWOBA")%>%
+              # data_color(column = zone_perc,
+              #            palette = c("blue", "steelblue1","white", "indianred1","red"),
+              #            domain = c(0,.75))%>%
+              fmt_percent(columns = c(zone_perc,whiff_perc,csw_perc),decimals = 1)%>%
+              fmt_number(columns = c(xwoba_contact_avg),decimals = 3)%>%
+              gt_add_divider(ind_pitches , color = 'black', include_labels = TRUE) %>%
+              # gt_add_divider(usage_diff, color = 'black', include_labels = TRUE) %>%
+              # gt_add_divider(number_of_ind_pitches, color = 'black', include_labels = TRUE) %>%
+              gt::cols_align(
+                align = "center",
+                columns = c(Rank,pitch_name,number_of_ind_pitches,new_zone,ind_pitches_percentage))%>%
+              tab_header(title = "Most Frequent Pitch + Location")%>%
+              #tab_source_note(source_note = "By Bucknell Analytics | Data: ncaahoopR")%>%
+              opt_align_table_header(align = "center")
+            
+            
+            
+            #get team logo
+            teamlogo <- mlbplotR::load_mlb_teams() %>% filter(team_abbr == unique(player$team)) %>% 
+              pull(team_logo_espn)
+            
+            
+            library(cfbplotR)
+            library(ggtext)
+            
+            #get player headshots
+            headshot <- mlbplotR::load_headshots() %>% filter(savant_id == player_id_df$key_mlbam) %>% 
+              pull(espn_headshot)
+            
+            
+            if(length(headshot) == 0 || is.na(headshot)) {
+              headshot = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Major_League_Baseball_logo.svg/2560px-Major_League_Baseball_logo.svg.png"
+            }
+            
