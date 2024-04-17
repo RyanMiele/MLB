@@ -1,0 +1,943 @@
+
+  
+  
+  
+  date328407 = baseballr::scrape_statcast_savant(start_date = '2023-03-28',
+                                                 end_date = '2023-04-07', player_type = 'batter')
+  
+  
+  #load Statcast data week by week, since it can only load 10 days at a time or 40,000 observations
+  #scrape_statcast_savant scrapes data from Savant given the game dates and the player types
+  date328407 = baseballr::scrape_statcast_savant(start_date = '2023-03-29',
+                                                 end_date = '2023-04-07', player_type = 'batter')
+  
+  date408414 = baseballr::scrape_statcast_savant(start_date = '2023-04-08',
+                                                 end_date = '2023-04-14', player_type = 'pitcher')
+  
+  date415421 = baseballr::scrape_statcast_savant(start_date = '2023-04-15',
+                                                 end_date = '2023-04-21', player_type = 'pitcher')
+  
+  date422428 = baseballr::scrape_statcast_savant(start_date = '2023-04-22',
+                                                 end_date = '2023-04-28', player_type = 'pitcher')
+  
+  date429505 = baseballr::scrape_statcast_savant(start_date = '2023-04-29',
+                                                 end_date = '2023-05-05', player_type = 'pitcher')
+  
+  date506512 = baseballr::scrape_statcast_savant(start_date = '2023-05-06',
+                                                 end_date = '2023-05-12', player_type = 'pitcher')
+  
+  date513519 = baseballr::scrape_statcast_savant(start_date = '2023-05-13',
+                                                 end_date = '2023-05-19', player_type = 'pitcher')
+  
+  date520526 = baseballr::scrape_statcast_savant(start_date = '2023-05-20',
+                                                 end_date = '2023-05-26', player_type = 'pitcher')
+  
+  date527602 = baseballr::scrape_statcast_savant(start_date = '2023-05-27',
+                                                 end_date = '2023-06-02', player_type = 'pitcher')
+  
+  date603609 = baseballr::scrape_statcast_savant(start_date = '2023-06-03',
+                                                 end_date = '2023-06-09', player_type = 'pitcher')
+  
+  date610616 = baseballr::scrape_statcast_savant(start_date = '2023-06-10',
+                                                 end_date = '2023-06-16', player_type = 'pitcher')
+  
+  date617623 = baseballr::scrape_statcast_savant(start_date = '2023-06-17',
+                                                 end_date = '2023-06-23', player_type = 'pitcher')
+  
+  date624630 = baseballr::scrape_statcast_savant(start_date = '2023-06-24',
+                                                 end_date = '2023-06-30', player_type = 'pitcher')
+  
+  date701707 = baseballr::scrape_statcast_savant(start_date = '2023-07-01',
+                                                 end_date = '2023-07-07', player_type = 'pitcher')
+  
+  date708714 = baseballr::scrape_statcast_savant(start_date = '2023-07-08',
+                                                 end_date = '2023-07-14', player_type = 'pitcher')
+  
+  date715721 = baseballr::scrape_statcast_savant(start_date = '2023-07-15',
+                                                 end_date = '2023-07-21', player_type = 'pitcher')
+  
+  date722728 = baseballr::scrape_statcast_savant(start_date = '2023-07-22',
+                                                 end_date = '2023-07-28', player_type = 'pitcher')
+  
+  date729804 = baseballr::scrape_statcast_savant(start_date = '2023-07-29',
+                                                 end_date = '2023-08-04', player_type = 'pitcher')
+  
+  date805811 = baseballr::scrape_statcast_savant(start_date = '2023-08-05',
+                                                 end_date = '2023-08-11', player_type = 'pitcher')
+  
+  date812818 = baseballr::scrape_statcast_savant(start_date = '2023-08-12',
+                                                 end_date = '2023-08-18', player_type = 'pitcher')
+  
+  date819825 = baseballr::scrape_statcast_savant(start_date = '2023-08-19',
+                                                 end_date = '2023-08-25', player_type = 'pitcher')
+  
+  date826901 = baseballr::scrape_statcast_savant(start_date = '2023-08-26',
+                                                 end_date = '2023-09-01', player_type = 'pitcher')
+  
+  date902908 = baseballr::scrape_statcast_savant(start_date = '2023-09-02',
+                                                 end_date = '2023-09-08', player_type = 'pitcher')
+  
+  date909915 = baseballr::scrape_statcast_savant(start_date = '2023-09-09',
+                                                 end_date = '2023-09-15', player_type = 'pitcher')
+  
+  date916922 = baseballr::scrape_statcast_savant(start_date = '2023-09-16',
+                                                 end_date = '2023-09-22', player_type = 'pitcher')
+  
+  date923929 = baseballr::scrape_statcast_savant(start_date = '2023-09-23',
+                                                 end_date = '2023-09-29', player_type = 'pitcher')
+  date9301007 = baseballr::scrape_statcast_savant(start_date = '2023-09-30',
+                                                 end_date = '2023-10-07', player_type = 'pitcher')
+  
+  #combine all data into one data frame
+  SavantDataPitcher23 = rbind(date328407, date408414, date415421, date422428, date429505,
+                       date506512, date513519, date520526, date527602, date603609,
+                       date610616, date617623, date624630, date701707, date708714,
+                       date715721, date722728, date729804, date805811, date812818,
+                       date819825, date826901, date902908, date909915, date916922,
+                       date923929)
+  
+  
+  
+  write.csv(SavantData21,"SavantHittingData21.csv", row.names = F)
+
+
+
+  SavantData23 = read.csv("SavantHittingData23.csv", stringsAsFactors = F)
+  
+  SavantDataTotalNew = rbind(SavantData21,SavantData22)
+  SavantDataTotal = rbind(SavantData21,SavantData22,SavantData23)
+  
+  
+  str(SavantData22)
+  
+  SavantDataTotal$game_date <- as.Date(SavantDataTotal$game_date)
+  
+  pitching_stats <- read.csv("pitching23.csv", header = TRUE, sep = ",")
+  
+  pitching_stats <- pitching_stats%>%
+    mutate(strike_perc= (p_total_strike/p_total_pitches)*100)%>%
+    select(player_id,strike_perc)
+  
+  
+  zone_area <- SavantData23%>%
+    left_join(pitching_stats, by = c( "pitcher" = "player_id"))%>%
+    mutate(strike_zone_area = (sz_top - sz_bot) * 1.42)%>%
+    group_by(batter)%>%
+    mutate(mean_strike_zone_area = mean(strike_zone_area))%>%
+    drop_na(strike_perc)%>%
+    mutate(mean_pitcher_faced_strike_perc = mean(strike_perc))%>%
+    reframe(player_name, mean_strike_zone_area,mean_pitcher_faced_strike_perc)
+    
+  
+  
+  zone_area <- zone_area[!duplicated(zone_area$player_name), ]
+  
+  zone_area <- zone_area%>%
+  arrange(mean_strike_zone_area)%>%
+    mutate(rank = row_number())%>%
+    drop_na(mean_strike_zone_area)%>%
+    reframe(rank,player_name, mean_strike_zone_area)%>%
+    #filter(rank <= 15)
+  
+  zone_area <- zone_area[-550, ]
+  
+  
+  
+  
+  zone_area %>%
+    gt() %>%
+    gtExtras::gt_theme_espn()%>%
+    cols_label(rank = "Rank",
+               player_name = "Player",
+               mean_strike_zone_area = "Average Strike Zone Size (Feet Squared)")%>%
+    data_color(columns = mean_strike_zone_area,
+               palette = c("red","indianred1","white", "steelblue1", "blue"),
+               domain = c(2.11,2.97))%>%
+    gt::cols_align(
+      align = "center",
+      columns = vars(mean_strike_zone_area))%>%
+    tab_header(title = "Smallest Player Strike Zones",
+               subtitle = "2023 MLB Season")%>%
+    tab_source_note(source_note = "By Bucknell Analytics | Data:baseballR")
+  
+  
+  
+  library(baseballr)
+  
+    
+    
+  
+  batter_stats <- read.csv("savant_strike_zone.csv", header = TRUE, sep = ",")
+  
+  batter_stats <- batter_stats%>%
+    left_join(zone_area, by = c( "player_id" = "batter"))
+  
+  
+  
+  batter_stats <- batter_stats[!duplicated(batter_stats$player_id), ]
+  
+  
+  batter_stats <- batter_stats%>%
+    drop_na(mean_strike_zone_area)%>%
+    arrange(-mean_strike_zone_area)%>%
+    mutate(strike_perc = b_total_strike/b_total_pitches,
+           taken_strike_perc= (b_called_strike/b_total_pitches)*100,
+           strike_zone_area_percent_rank = (rank(mean_strike_zone_area)/length(mean_strike_zone_area))*100)
+  
+  
+  
+  ggplot(aes(x = mean_strike_zone_area, y = oz_swing_percent), data = batter_stats) +
+    geom_point(aes(x = mean_strike_zone_area, y = oz_swing_percent), data = batter_stats) +
+    geom_label_repel(aes(label=player_name), size = 2.25)+
+    geom_smooth(method = "lm", color = "gray", se = FALSE, alpha = 0.1)+
+    theme_minimal() 
+    
+    
+  
+  install.packages("corrplot")
+  library(corrplot)
+  
+  M <- corrplot(cor_data, method="pie")
+    
+    cor_batter <- batter%>%
+      select(-last_name..first_name,-player_id,-year,-X,-player_name,-b_called_strike,-b_total_ball,-b_total_strike,-b_total_pitches,-league_mean_strike_difficulty)
+    
+    select(-last_name..first_name,-player_id,-year,-X,-player_name,)
+  
+    
+    cor_batter <- batter%>%
+      select(-player_name.x,-player_id)
+    
+    
+  corrplot(M, method="pie")
+  
+  
+  
+  cor_data = cor(cor_batter)
+  
+  print("Correlation matrix")
+  print(cor_data)
+  
+  
+  strike_perc_lm <- lm(strike_perc ~ strike_zone_area_percent_rank + taken_strike_perc  +
+                         oz_swing_percent +z_swing_miss_percent + mean_pitcher_faced_strike_perc,
+                 data = batter_stats)
+  
+  
+  summary(strike_perc_lm)
+  
+  vip(strike_perc_lm, num_features = 5)
+  
+  options(scipen=999)
+  
+  batter <- batter_stats%>%
+    mutate(strike_difficulty = 3*oz_swing_percent + 1.5*taken_strike_perc +
+             z_swing_miss_percent+strike_zone_area_percent_rank + 0.5*mean_pitcher_faced_strike_perc,
+           strike_difficulty_percent_rank = (rank(-strike_difficulty)/length(strike_difficulty))*100,
+           league_mean_strike_difficulty = mean(strike_difficulty),
+           strike_difficulty_plus = round((league_mean_strike_difficulty/strike_difficulty)*100,0))
+    
+  
+  batter_chart <- batter%>%
+    left_join(gt_headshot_example, by = c( "player_id" = "savant_id"))%>%
+    arrange(-strike_difficulty_plus)%>%
+    mutate(rank = row_number())%>%
+    #drop_na(mean_strike_zone_area)%>%
+    reframe(rank,player_name, espn_headshot, strike_difficulty_plus)%>%
+    filter(rank <= 15)
+    
+  
+  
+  
+  
+  batter_chart %>%
+    gt() %>%
+    gtExtras::gt_theme_espn()%>%
+    gtExtras::gt_img_rows(espn_headshot)%>%
+    cols_label(rank = "Rank",
+               player_name = "Player",
+               espn_headshot = " ",
+               strike_difficulty_plus = "Strike Difficulty+")%>%
+    data_color(columns = strike_difficulty_plus,
+               palette = c("blue","steelblue1","white", "indianred1", "red"),
+               domain = c(60,175))%>%
+    gt::cols_align(
+      align = "center",
+      columns = vars(strike_difficulty_plus))%>%
+    gt::cols_align(
+      align = "center",
+      columns = vars(player_name))%>%
+    gt::cols_align(
+      align = "center",
+      columns = vars(rank))%>%
+    tab_header(title = "Hardest Players to Throw a Strike To",
+               subtitle = "Minimum 150 PA | 2023 MLB Season")%>%
+    tab_source_note(source_note = "By Bucknell Analytics | Data:baseballR")%>%
+    opt_align_table_header(align = "center")
+  
+  
+  
+  
+  ggplot(aes(x = strike_difficulty_plus, y = xwoba), data = batter) +
+    geom_point(aes(x = strike_difficulty_plus, y = woba), data = batter) +
+    geom_label_repel(aes(label=player_name.x), size = 2.25)+
+    geom_smooth(method = "lm", color = "gray", se = FALSE, alpha = 0.1)+
+    theme_minimal() 
+  
+  
+  
+  
+  
+  # scatterplot of the headshots
+  ggplot(df, aes(x = a, y = b)) +
+    geom_mlb_headshots(aes(player_id = player_id), height = 0.2) +
+    geom_label(aes(label = player_name), nudge_y = -0.35, alpha = 0.5) +
+    coord_cartesian(xlim = c(0.75, 3.25), ylim = c(0.7, 3.25)) +
+    theme_void()
+  
+  # apply alpha as constant and use non default na replacement
+  ggplot(df, aes(x = a, y = b)) +
+    geom_mlb_headshots(aes(player_id = player_id), height = 0.2, alpha = 0.5,
+                       na_headshot_to_logo = FALSE) +
+    geom_label(aes(label = player_name), nudge_y = -0.35, alpha = 0.5) +
+    coord_cartesian(xlim = c(0.75, 3.25), ylim = c(0.7, 3.25)) +
+    theme_void()
+  
+  gt_headshot_example <- mlbplotR::load_headshots() %>%
+    select(espn_name, savant_id,espn_headshot)
+  
+  library(stringr)
+  splits <- str_split_fixed(batter_chart$player_name.x, ", ",2)
+  batter_chart$player_name.x <- paste(splits[,2],splits[,1],sep = " ")
+  
+  
+  
+  
+  devtools::install_github("bdilday/GeomMLBStadiums")
+  library(GeomMLBStadiums)
+  unique(SavantDataTotal$description)
+  library(sportyR)
+  
+  #bb_type == "ground_ball"
+  
+      bunts <-  SavantDataTotal%>%
+      mutate(is_bunt = if_else(grepl("bunt",des), 1,0),
+             is_successful = if_else(events == "single" | events == "sac_bunt" | events == "double", 1,0))%>%
+        filter(is_bunt == 1,
+               description == "hit_into_play")%>%
+        select(pitch_name,events,description,des,p_throws,stand,hit_location,
+                bb_type,balls,strikes,on_3b,on_2b,on_1b,outs_when_up,hc_x,hc_y,is_bunt,
+                delta_run_exp,if_fielding_alignment, is_successful)
+      
+spec <- SavantDataTotal%>%
+  filter(des == 	"Odubel Herrera doubles (21) on a soft bunt ground ball to shortstop Trevor Story.   Bryce Harper scores.    Andrew McCutchen scores.    Didi Gregorius to 3rd.")
+      
+      
+      bunts_transformed <- mlbam_xy_transformation(bunts, scale = 2.495671)
+        
+      bunts_transformed <- bunts_transformed%>%
+        mutate(side_of_mound = if_else(hc_x_ >0,"Right","Left"),
+              is_successful = if_else(events == "single" | 
+                            events == "sac_bunt" | events == "double", 1,0),
+              total_mean_success = mean(is_successful),
+              hc_y_ = hc_y_ + 4)
+      
+      
+      bunts_transformed <- bunts_transformed[-1997, ]
+      bunts_transformed <- bunts_transformed[-1675, ]
+      bunts_transformed <- bunts_transformed[-2701, ]
+      bunts_transformed <- bunts_transformed[-1307, ]
+      
+      bunts_transformed <- bunts_transformed[-2022, ]
+      
+      calcs <- bunts_transformed%>%
+        group_by(p_throws,stand,side_of_mound)%>%
+        mutate(side_mound_mean_success = mean(is_successful),
+               count = n(),
+               stand = if_else(stand == "L", "Lefty","Righty"))%>%
+        reframe(count,side_mound_mean_success,p_throws,stand,side_of_mound)
+      
+      
+      calcs <- calcs[!duplicated(calcs$side_mound_mean_success), ]
+      
+      
+      calcs  <- calcs [-5, ]
+      
+      lefty <- calcs%>%
+        filter(p_throws == "L")%>%
+        select(-p_throws)
+      
+      
+      righty <- calcs%>%
+        filter(p_throws == "R")%>%
+        select(-p_throws)
+      
+      
+      
+      tab_combined <- data.frame(lefty,righty)
+      
+      
+      
+      tab_combined %>%
+        gt() %>%
+        gtExtras::gt_theme_538()%>%
+        cols_label(side_of_mound = "Side of Mound Ball is Bunted",
+                   count = "Number of Occurrences",
+                    side_mound_mean_success= "Success Rate",
+                   side_of_mound.1 = "Side of Mound Ball is Bunted",
+                   count.1 = "Number of Occurrences",
+                   side_mound_mean_success.1= "Success Rate")%>%
+       data_color(columns = c(side_mound_mean_success,side_mound_mean_success.1),
+                  palette = c("blue","steelblue1","white", "indianred1", "red"),
+                  domain = c(.62,.78))%>%
+        fmt_percent(columns = c(side_mound_mean_success,side_mound_mean_success.1),decimals = 1)%>%
+        gt::cols_align(columns = c(everything()),"center")%>%
+        tab_spanner(columns = c(side_of_mound,count, side_mound_mean_success),label = "Facing Lefty Pitcher")%>%
+        tab_spanner(columns = c(side_of_mound.1,count.1, side_mound_mean_success.1),label = "Facing Righty Pitcher")%>%
+        gt_add_divider(side_mound_mean_success,color = "black")%>%
+        tab_header(title = "Sacrifice Bunt Success Rate",
+                                     subtitle = "Batter's POV | 2023-2023 MLB Seasons")%>%
+        tab_source_note(source_note = "By Bucknell Analytics | Data:baseballR")%>%
+        opt_align_table_header(align = "center")
+      
+      tab_combined %>%
+        gt() %>%
+        gtExtras::gt_theme_538()%>%
+        cols_label(stand = "Batter Handedness",
+                   side_of_mound = "Side of Mound Ball is Bunted",
+                   count = "Number of Occurrences",
+                   side_mound_mean_success= "Success Rate",
+                   stand.1 = "Batter Handedness",
+                   side_of_mound.1 = "Side of Mound Ball is Bunted",
+                   count.1 = "Number of Occurrences",
+                   side_mound_mean_success.1= "Success Rate")%>%
+        data_color(columns = c(side_mound_mean_success,side_mound_mean_success.1),
+                   palette = c("blue","steelblue1","white", "indianred1", "red"),
+                   domain = c(.62,.78))%>%
+        fmt_percent(columns = c(side_mound_mean_success,side_mound_mean_success.1),decimals = 1)%>%
+        gt::cols_align(columns = c(everything()),"center")%>%
+        tab_spanner(columns = c(stand,side_of_mound,count, side_mound_mean_success),label = "Facing Lefty Pitcher")%>%
+        tab_spanner(columns = c(stand.1,side_of_mound.1,count.1, side_mound_mean_success.1),label = "Facing Righty Pitcher")%>%
+        gt_add_divider(side_mound_mean_success,color = "black")%>%
+        tab_header(title = "Sacrifice Bunt Success Rate",
+                   subtitle = "Batter's POV | 2021-2023 MLB Seasons")%>%
+        tab_source_note(source_note = "By Bucknell Analytics | Data:baseballR")%>%
+        opt_align_table_header(align = "center")
+      
+      righty %>%
+        gt() %>%
+        gtExtras::gt_theme_538()%>%
+        cols_label(count = "Number of Occurances",
+                   side_mound_mean_success= "Success Rate",
+                   side_of_mound = "Side of Mound Ball is Bunted (Batter's POV)")%>%
+        data_color(columns = side_mound_mean_success,
+                   palette = c("red","indianred1","white", "steelblue1", "blue"),
+                   domain = c(.6,.8))%>%
+        fmt_percent(columns = c(side_mound_mean_success),decimals = 1)%>%
+        gt::cols_align(
+          align = "center",
+          columns = vars(side_of_mound))%>%
+        gt::cols_align(
+          align = "center",
+          columns = vars(count))%>%
+        gt::cols_align(
+          align = "center",
+          columns = vars(side_mound_mean_success))%>%
+        tab_header(title = "Sacrifice Bunt Success Rate vs. a Righty Pitcher",
+                   subtitle = "2021-2023 MLB Seasons")%>%
+        tab_source_note(source_note = "By Bucknell Analytics | Data:baseballR")%>%
+        opt_align_table_header(align = "center")
+      
+      
+      
+      listed_tables <- list(lefty, righty)
+      my_tables <- gt_double_table()
+      
+  library(gtExtras)
+      
+      gtExtras::gt_two_column_layout(listed_tables)
+      
+      
+      
+      lefty+righty +
+        plot_annotation(title = "Colorado Avalanche Shot Danger Distribution",
+                        subtitle = "Quality of Shots per 60 Mins Relative to Other Teams | 2023-24 Season",
+                        caption = "By Bucknell Analytics | Data: MoneyPuck",
+                        theme = theme(plot.title = element_text(family = "Times",size = 40, face = "bold", hjust = 0.5),
+                                      plot.subtitle = element_text(family = "Times",size = 23, hjust = 0.5)))
+      
+      
+      
+      geom_baseball(league = "MLB", display_range = "infield") +
+        geom_point(data = bunts_transformed, aes(hc_x_, hc_y_))+
+        geom_density2d_filled(aes(fill=..level.., color = ..level..),
+                              contour_var = "ndensity",
+                              breaks = seq(0.1,1.0,length.out = 10))+
+        theme(legend.position = "none")+
+        scale_fill_manual(values = c(heat_colors_interpolated), aesthetics = c("fill", "color"))+
+        #geom_spraychart(stadium_transform_coords = TRUE, stadium_segments = "all") +
+        #geom_segment(x=0, xend = 0, y=-0, yend = 60)+
+        stat_summary_hex(binwidth = 40) +
+        scale_fill_distiller(palette = "RdBu", direction = -1) +
+        coord_fixed()
+      
+      
+        geom_text(aes(x = -35, y = 60,
+                      label = "Left", size = 12), color = "white")+
+        geom_text(aes(x = 35, y = 60,
+                      label = "Right", size = 12),color = "white")+
+        geom_text(aes(x = 0, y = 80,
+                      label = "All Pitchers", size = 12),color = "white")
+        
+        
+        geom_point(data = bunts_transformed, aes(hc_x_, hc_y_, color = events))+
+        geom_segment(x=0, xend = 0, y=-0, yend = 60)
+        geom_segment(x=0, xend = 18, y=-0, yend = 100)
+        palette <-paletteer::paletteer_c("ggthemes::Red-Blue Diverging", 6, direction = -1)
+        new_palette <-paletteer::paletteer_c("ggthemes::Red-Blue Diverging")
+        
+        heat_colors <- grDevices::colorRampPalette(c("#800026FF", "#FC4E2AFF", "#FEB24CFF", "#FFFFCCFF"))(10)
+        
+        heat_palette <- paletteer::paletteer_d("RColorBrewer::YlOrRd", n = 9, direction = -1)
+        
+        heat_colors_interpolated <- colorRampPalette(paletteer::paletteer_d("RColorBrewer::YlOrRd", n = 9, direction = -1))(10)
+        
+        heat_colors %>% scales::show_col()
+        
+        
+      ggplot(bunts_transformed, aes(x = hc_x_, y = hc_y_, z = is_successful, color = is_successful)) +
+        geom_spraychart(stadium_transform_coords = TRUE, stadium_segments = "all") +
+        geom_density2d_filled(aes(fill=..level.., color = ..level..),
+                              contour_var = "ndensity",
+                             breaks = seq(0.1,1.0,length.out = 10))+
+        theme(legend.position = "none")+
+        scale_fill_manual(values = c(heat_colors_interpolated), aesthetics = c("fill", "color"))+
+         ylim(-80, 225) +
+        theme_void()+
+        geom_segment(x=87, xend = 87, y=95, yend = 100)+
+        geom_segment(x=90, xend = 90, y=95, yend = 100)+
+        geom_segment(x=87, xend = 90, y=100, yend = 100)+
+        geom_segment(x=87, xend = 90, y=95, yend = 95)+
+        geom_segment(x=-90, xend = -90, y=95, yend = 100)+
+        geom_segment(x=-87, xend = -87, y=95, yend = 100)+
+        geom_segment(x=-87, xend = -90, y=100, yend = 100)+
+        geom_segment(x=-87, xend = -90, y=95, yend = 95)
+        
+        
+        
+        geom_segment(x=0, xend = 0, y=-0, yend = 60)+
+        stat_summary_hex(binwidth = 40) +
+        scale_fill_distiller(palette = "RdBu", direction = -1) +
+        coord_fixed() +
+        ylim(-80, 225) +
+        theme_void()
+      
+      install.packages("hrbrthemes")
+      library(hrbrthemes)
+      
+      ggplot(bunts_transformed, aes(x = hc_x_, y = hc_y_)) +
+        geom_spraychart(stadium_transform_coords = TRUE, stadium_segments = "all") +
+        geom_tile(aes(fill = is_successful),color = "white")+
+        theme_ipsum()+
+        scale_fill_distiller(palette = "RdBu", direction = -1)
+        #geom_segment(x=0, xend = 0, y=-0, yend = 60)+
+        
+        
+        
+        
+      ggplot(bunts_transformed, aes(x = hc_x_, y = hc_y_, z = is_successful)) + 
+        #geom_point(data = bunts_transformed, aes(hc_x_, hc_y_, color = is_successful))+
+        stat_summary_2d(binwidth = 8) +
+        #stat_density_2d(aes(fill = ..level..),geom = "polygon")+
+        scale_fill_distiller(palette = "YlOrRd", direction = 1,name = "Success Rate",
+                             breaks = c(0,.5,.9), labels = c("0%", "50%","100%"))+
+        geom_mlb_stadium(stadium_ids = "athletics",stadium_transform_coords = TRUE, stadium_segments = "all") +
+        coord_fixed() +
+        ylim(-13, 150) +
+        xlim(-100, 100) +
+        theme_void()+
+        labs(title = 'Location of Successful Sacrifice Bunts',
+             caption = "By Bucknell Analytics | Data: baseballR, GeomMLBStadiums",
+             subtitle = "2021-2023 MLB Seasons")+
+        theme(plot.title = element_text(size = 28, face = "bold", hjust = 0.5),
+              legend.title = element_text(size = 18,face = "bold",vjust = 3),
+              legend.text = element_text(size= 14))+
+        theme(plot.subtitle = element_text(size = 18, hjust = 0.5))
+        
+        
+        
+        
+        
+        
+        ggplot(bunts_transformed, aes(x = hc_x_, y = hc_y_)) + 
+        #geom_point(data = bunts_transformed, aes(hc_x_, hc_y_, color = is_successful))+
+        stat_summary_2d(binwidth = 8) +
+        #stat_density_2d(aes(fill = "is_succesful"),geom = "polygon")+
+        scale_fill_distiller(palette = "YlOrRd", direction = 1)+
+        geom_mlb_stadium(stadium_ids = "athletics",stadium_transform_coords = TRUE, stadium_segments = "all") +
+        coord_fixed() +
+        ylim(-13, 170) +
+        xlim(-100, 100) +
+        theme_void()+
+        labs(title = 'Location of Successful Sacrifice Bunts',
+             caption = "By Bucknell Analytics | Data: baseballR",
+             subtitle = "2021-2023 MLB Seasons")+
+        theme(plot.title = element_text(size = 22, face = "bold", hjust = 0.5))+
+        theme(plot.subtitle = element_text(size = 14, hjust = 0.5))
+        
+        
+        
+        geom_segment(x=87, xend = 87, y=90, yend = 95)+
+        geom_segment(x=90, xend = 90, y=95, yend = 95)+
+        geom_segment(x=87, xend = 90, y=100, yend = 100)+
+        geom_segment(x=87, xend = 90, y=95, yend = 95)+
+        geom_segment(x=-90, xend = -90, y=95, yend = 100)+
+        geom_segment(x=-87, xend = -87, y=95, yend = 100)+
+        geom_segment(x=-87, xend = -90, y=100, yend = 100)+
+        geom_segment(x=-87, xend = -90, y=95, yend = 95)+
+        geom_segment(y=60, yend = 60, x=-2, xend = 2)+
+        geom_segment(y=62, yend = 62, x=-2, xend = 2)+
+        geom_segment(x=2, xend = 2, y=60, yend = 62)+
+        geom_segment(x=-2, xend = -2, y=60, yend = 62)+
+        geom_segment(x=0, xend = 0, y=0, yend = 0.5)+
+        geom_segment(x=-1.5, xend = 1.5, y=135, yend = 135)+
+        geom_segment(x=-1.5, xend = 1.5, y=140, yend = 140)+
+        geom_segment(x=1.5, xend = 1.5, y=135, yend = 140)+
+        geom_segment(x=-1.5, xend = -1.5, y=135, yend = 140)
+    
+      
+      
+      
+      
+        ggplot(aes(x = hc_x, y = (hc_y*-1),color = events), data = bunts) + 
+        geom_point() + 
+        xlim(80,170) +
+        ylim(-225, -120) +
+        ggtitle("\nComparing Correct & Incorrect Model Predictons\n") +
+        #facet_wrap(~miss) +
+        geom_segment(x=128, xend = 18, y=-208, yend = -100) + 
+        geom_segment(x=128, xend = 237, y=-208, yend = -100) + 
+        geom_curve(x = 128-45, xend = 128 + 45, y = -208 + 48, yend = -208 + 48, curvature = -.7, linetype = "dotted") + 
+        geom_curve(x = 19, xend = 237, y = -100, yend = -100, curvature = -.65) + 
+        theme(strip.text.x = element_text(face = "bold", size = 14)) 
+        #scale_color_manual(values = tab_condensed_factor, "Outcome")
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        teams_colors_logos <- mlbplotR::load_mlb_teams()
+        head_shots <- mlbplotR::load_headshots()
+                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        stuff <- read.csv("Stuff+ by Inning.csv", header = TRUE, sep = ",")
+        
+        
+        stuff <- stuff%>%
+          left_join(head_shots, 
+                         by = c("pitcher" = "savant_id"))
+        
+        stuff_plus <- stuff%>%
+          rename("1" = "X1",
+                 "2" = "X2",
+                 "3" = "X3",
+                 "4" = "X4",
+                 "5" = "X5",
+                 "6" = "X6",
+                 "7" = "X7",
+                 "8" = "X8",
+                 "9" = "X9")%>%
+          pivot_longer(c("1","2","3","4","5","6","7","8","9"),
+                       names_to = "Inning",values_to = "Stuff")
+          
+        
+        
+        player <- stuff_plus %>%
+          filter(player_name.x == "James Paxton")
+        league <- stuff_plus %>%
+          filter(type == "SP",
+                 player_name.x != "James Paxton")
+        
+        
+        str(player)
+        player$`Stuff+` <- as.numeric(player$`Stuff+`)
+        
+        
+        
+        ggplot() +
+          geom_jitter(data = league, aes(x = Inning, y = Stuff), fill = "gray",
+                      alpha = 0.3, width = 0.05, size = 4, shape = 21) + 
+          geom_line(data = player, aes(x = Inning, y = Stuff, color = "navy"), size = 1,group = 1) +
+          geom_image(data = player, aes(x = Inning, y = Stuff, image = espn_headshot), asp = 16/9, size = 0.12) +
+          geom_label(data = player, aes(x = Inning, y = Stuff,label=Stuff),vjust = 1.7,size = 5.25)+
+          scale_color_identity(aesthetics = c("fill", "color")) +
+          theme_minimal()+
+          #theme_fivethirtyeight() +
+          geom_hline(yintercept = 100) +
+          labs(x = "Inning",
+               y = "Stuff+",
+               title = "James Paxton Stuff+ By Inning",
+               subtitle = "2023 Season | Other SPs Shown For Reference",
+               caption = "By Bucknell Analytics | Data: @JonPgh") +
+          scale_y_continuous(limits = c(40,180),minor_breaks = seq(40 , 180, 10), breaks = seq(40, 180, 20)) +
+          theme(plot.title = element_text(size = 25, hjust = 0.5, face = "bold"),
+                plot.subtitle = element_text(size = 18, hjust = 0.5),
+                axis.text = element_text(size = 15),
+                axis.title.y = element_text(size=18),
+                axis.title.x = element_text(size=18))
+        
+      
+        scale_y_continuous(limits = c(40,180),breaks = scales::pretty_breaks(n = 10),
+                           minor_breaks = c(50,70,90,110,130,150,170)) 
+          
+          
+          
+          
+          unique(SavantData23$events)
+          
+          sequence <- SavantData23%>%
+            mutate(start_of_pa = if_else(balls == 0 & strikes == 0,1,0),
+                   end_of_pa = if_else (event == "strikeout" | event =="field_out"|event =="grounded_into_double_play"|
+                                          event =="strikeout_double_play"|event =="hit_by_pitch"|event ="other_out"|
+                                          event =="fielders_choice_out"|event =="triple_play"|event =="double_play"|
+                                          event =="field_out"|event =="field_out"|event =="field_out"|
+                                          event =="field_out"|event =="field_out"|event =="field_out"))
+            
+          
+        
+        
+          
+          names(SavantDataTotal)
+          unique(SavantDataTotal$description)
+          
+          
+          waste <- SavantDataTotal%>%
+            mutate(is_high = if_else(type == "B" & zone == "11" | zone == "12" & plate_z > sz_top,1,0),
+                   is_fastball = if_else(pitch_type == "FF"| pitch_type == "FC"|pitch_type == "FS"|pitch_type == "FA",1,0),
+                   is_waste = if_else(strikes == "2" & is_fastball == 1 & is_high == 1 & 
+                                        balls != 3 & balls != 4 ,1,0),
+                   is_swing = if_else(description == "swinging_strike" | description == "foul" |description == "foul_tip" |
+                                        description == "hit_into_play",1,0),
+                   is_whiff = if_else(description == "swinging_strike",1,0))%>%
+            filter(is_waste == 1,game_year == "2023")%>%
+            #group_by(batter)%>%
+              mutate(total_whiffs = sum(is_whiff),
+                whiff_perc = sum(is_whiff)/sum(is_swing),
+                     number_of_high_waste = sum(is_waste),
+                   chase_perc = sum(is_swing)/sum(is_high),
+                   swinging_strike_perc = total_whiffs/number_of_high_waste)%>%
+            #filter(strikes == "2" | strikes == "3" & lag(is_waste) == 1)%>%
+            select(number_of_high_waste,total_whiffs,whiff_perc,chase_perc,swinging_strike_perc)
+            
+          
+          high_chase <- high_chase[!duplicated(high_chase), ]
+          
+          
+          
+            high_chase <- waste%>%
+              select(player_name,number_of_high_waste,total_whiffs,chase_perc,whiff_perc,swinging_strike_perc)%>%
+              filter(number_of_high_waste >= 30)
+                     
+            
+            high_chase <- high_chase[!duplicated(high_chase), ]
+            
+            
+            
+            gt_headshot_example <- mlbplotR::load_headshots() %>%
+              select(espn_name, savant_id,espn_headshot)
+            
+            
+            high_chase_table[is.na(high_chase_table)] <- 0
+            
+            high_chase_table <- high_chase%>%
+              left_join(gt_headshot_example, by = c( "batter" = "savant_id"))%>%
+              ungroup()%>%
+              filter(!is.na(espn_name))%>%
+              arrange(swinging_strike_perc,chase_perc,-number_of_high_waste)%>%
+              mutate(rank = row_number())%>%
+              #drop_na(mean_strike_zone_area)%>%
+              select(rank,espn_name,espn_headshot, number_of_high_waste,chase_perc,whiff_perc,swinging_strike_perc)%>%
+              filter(rank <= 20)
+              
+              high_chase_tables <- high_chase_table%>%
+              arrange(-swinging_strike_perc)
+            
+            high_chase_tables %>%
+              gt() %>%
+              gtExtras::gt_theme_538()%>%
+              gtExtras::gt_img_rows(espn_headshot)%>%
+              cols_label(rank = "Rank",
+                         espn_name = "Player",
+                         espn_headshot = " ",
+                         number_of_high_waste = "Occurrences",
+                         chase_perc = "Chase %",
+                         whiff_perc = "Whiff %",
+                         swinging_strike_perc = "Swinging Strike %")%>%
+              data_color(columns = chase_perc,
+                         palette = c("red","indianred1","white", "steelblue1", "blue"),
+                         domain = c(0,.77))%>%
+              data_color(columns = whiff_perc,
+                        palette = c("red","indianred1","white", "steelblue1", "blue"),
+                        domain = c(0,1))%>%
+              data_color(columns = swinging_strike_perc,
+                        palette = c("red","indianred1","white", "steelblue1", "blue"),
+                        domain = c(0,.27))%>%
+              fmt_percent(columns = c(chase_perc,whiff_perc,swinging_strike_perc),decimals = 1)%>%
+              gt::cols_align(
+                align = "center",
+                columns = c(everything()))%>%
+              tab_header(title = "Best Batters at Facing High Fastballs in Waste Pitch Opportunities",
+                         subtitle = "Minimum 30 Occurrences | 2023 MLB Season")%>%
+              tab_source_note(source_note = "By Bucknell Analytics | Data:baseballR")%>%
+              opt_align_table_header(align = "center")%>%
+              tab_footnote(locations = cells_title(groups = "title"),
+                           footnote = "A Waste Pitch Opportunity is defined as either an 0-2, 1-2, or 2-2 count.")
+            
+            
+            
+            
+            
+            
+            tab1 <- high_chase_table %>%
+              dplyr::slice(1:10) 
+            
+            
+            tab2 <- high_chase_table %>%
+              dplyr::slice(11:20) 
+            
+            tab_combined <- data.frame(tab1,tab2)
+            
+            tab_combined <- tab_combined%>%
+              select(-whiff_perc,-whiff_perc.1)
+            
+            
+            
+            tab_combined %>%
+              gt() %>%
+              gtExtras::gt_theme_538()%>%
+              gtExtras::gt_img_rows(espn_headshot)%>%
+              gtExtras::gt_img_rows(espn_headshot.1)%>%
+              cols_label(rank = "Rank",
+                         espn_name = "Player",
+                         espn_headshot = " ",
+                         number_of_high_waste = "Occurrences",
+                         chase_perc = "Chase %",
+                         swinging_strike_perc = "Swinging Strike %",
+                         rank.1 = "Rank",
+                         espn_name.1 = "Player",
+                         espn_headshot.1 = " ",
+                         number_of_high_waste.1 = "Occurrences",
+                         chase_perc.1 = "Chase %",
+                         swinging_strike_perc.1 = "Swinging Strike %")%>%
+              data_color(columns = c(chase_perc,chase_perc.1),
+                         palette = c("red","indianred1","white", "steelblue1", "blue"),
+                         domain = c(0,.77))%>%
+              data_color(columns = c(swinging_strike_perc,swinging_strike_perc.1),
+                         palette = c("red","indianred1","white", "steelblue1", "blue"),
+                         domain = c(0,.27))%>%
+              fmt_percent(columns = c(chase_perc,chase_perc.1),decimals = 1)%>%
+              fmt_percent(columns = c(swinging_strike_perc,swinging_strike_perc.1),decimals = 0)%>%
+              gt::cols_align(
+                align = "center",
+                columns = c(everything()))%>%
+              tab_header(title = "Best Batters at Facing High Fastballs in Waste Pitch Opportunities",
+                         subtitle = "Minimum 30 Occurrences | 2023 MLB Season")%>%
+              tab_source_note(source_note = "By Bucknell Analytics | Data:baseballR")%>%
+              opt_align_table_header(align = "center")%>%
+              tab_footnote(locations = cells_title(groups = "title"),
+                           footnote = "A Waste Pitch Opportunity is defined as either an 0-2, 1-2, or 2-2 count.")
+            
+            
+            
+            # Waste Low Breaking Balls
+            
+            
+            waste_low <- SavantDataTotal%>%
+              mutate(is_low = if_else(type == "B" & zone == "13" | zone == "14" & plate_z < sz_bot,1,0),
+                     is_fastball = if_else(pitch_type == "FF"| pitch_type == "FC"|pitch_type == "FS"|pitch_type == "FA",1,0),
+                     is_waste = if_else(strikes == "2" & is_fastball == 1 & is_high == 1 & 
+                                          balls != 3 & balls != 4 ,1,0),
+                     is_swing = if_else(description == "swinging_strike" | description == "foul" |description == "foul_tip" |
+                                          description == "hit_into_play",1,0),
+                     is_whiff = if_else(description == "swinging_strike",1,0))%>%
+              filter(is_waste == 1,game_year == "2023")%>%
+              #group_by(batter)%>%
+              mutate(total_whiffs = sum(is_whiff),
+                     whiff_perc = sum(is_whiff)/sum(is_swing),
+                     number_of_high_waste = sum(is_waste),
+                     chase_perc = sum(is_swing)/sum(is_high),
+                     swinging_strike_perc = total_whiffs/number_of_high_waste)%>%
+              #filter(strikes == "2" | strikes == "3" & lag(is_waste) == 1)%>%
+              select(number_of_high_waste,total_whiffs,whiff_perc,chase_perc,swinging_strike_perc)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            c("red","indianred1","white", "steelblue1", "blue")
+            high_fastball_index <- which(waste$is_fastball == 1 & waste$is_high == 1)
+            
+            filtered_fb <- waste[(high_fastball_index + 1):nrow(waste), ]
+        
+            
+            if (length(high_fastball_index) > 0) {
+              filtered_fb <- waste[(high_fastball_index[length(high_fastball_index)] + 1):nrow(waste), ]
+            } else {
+              # No high fastball found, return an empty data frame or handle it accordingly
+              filtered_fb <- data.frame()
+            }
+            
+
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+
