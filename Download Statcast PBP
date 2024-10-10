@@ -1,0 +1,49 @@
+
+list_of_dataframes <- list()
+
+# Define the start and end dates
+start_dates <- seq(as.Date("2024-03-20"), as.Date("2024-04-05"), by = "days")
+end_dates <- start_dates
+
+# Loop through the dates and download the data
+for (i in seq_along(start_dates)) {
+  # Define the URL for the current date
+  url <- paste0(
+    'https://baseballsavant.mlb.com/statcast_search/csv?all=true',
+    '&hfPT=&hfAB=&hfBBT=&hfPR=&hfZ=&stadium=&hfBBL=&hfNewZones=&hfGT=R%7CPO%7CS%7C',
+    '&hfC&hfSea=2024%7C&hfSit=&hfOuts=&opponent=&pitcher_throws=&batter_stands=',
+    '&hfSA=&player_type=batter&hfInfield=&team=&position=&hfOutfield=&hfRO=',
+    '&home_road=&game_date_gt=', start_dates[i], '&game_date_lt=', end_dates[i],
+    '&hfFlag=&hfPull=&metric_1=&hfInn=&min_pitches=0&min_results=0',
+    '&group_by=name&sort_col=pitches&player_event_sort=h_launch_speed&sort_order=desc&min_abs=0&type=details'
+  )
+  
+  # Download the data
+  sc_data <- tryCatch({
+    fread(url, stringsAsFactors = FALSE)
+  }, error = function(e) {
+    message(paste("Error downloading data for", start_dates[i], ":", e$message))
+    return(NULL)
+  })
+  
+  # If data was successfully downloaded, process it
+  if (!is.null(sc_data)) {
+    # Manually rename problematic columns
+    colnames(sc_data) <- gsub("^pitcher$", "pitcher_1", colnames(sc_data))
+    colnames(sc_data) <- gsub("^fielder_2$", "fielder_2_1", colnames(sc_data))
+    
+    # Check for any other column name conflicts and resolve them
+    colnames(sc_data) <- make.unique(colnames(sc_data))
+    
+    # Append the data to the list
+    list_of_dataframes[[length(list_of_dataframes) + 1]] <- sc_data
+  }
+}
+
+# Bind all data into one dataframe
+sc24_all <- rbindlist(list_of_dataframes, fill = TRUE)
+
+sc24_all <- sc24_all%>%
+  filter(game_type == "R")
+
+write.csv(sc24_all,"SavantStatCastData24.csv", row.names = F)
