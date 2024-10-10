@@ -2,7 +2,7 @@
 list_of_dataframes <- list()
 
 # Define the start and end dates
-start_dates <- seq(as.Date("2024-03-20"), as.Date("2024-04-05"), by = "days")
+start_dates <- seq(as.Date("2024-03-20"), as.Date("2024-09-30"), by = "days")
 end_dates <- start_dates
 
 # Loop through the dates and download the data
